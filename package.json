@@ -1,0 +1,23 @@
+{
+  "name": "irctc",
+  "version": "1.0.0",
+  "description": "This is a project built at the Microsoft Ventures HackForHire Hackathon.\r We attempt to redesign the IRCTC UI flow making it easier for the users to achieve what they came to the site for in the first place i.e. book tickets!",
+  "main": "homepage.js",
+  "dependencies": {
+    "express": "^4.10.4"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "http://github.com/abilashhp/irctc.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/abilashhp/irctc/issues"
+  },
+  "homepage": "https://github.com/abilashhp/irctc"
+}
