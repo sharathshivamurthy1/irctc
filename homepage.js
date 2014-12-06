@@ -1,8 +1,10 @@
-var http = require('http');
-var fs = require('fs');
-var index = fs.readFileSync('index.html');
+var express = require('express');
+    app = express();
 
-http.createServer(function (req, res) {
-  res.writeHead(200, {'Content-Type': 'text/html'});
-  res.end(index);
-}).listen(8080);
+app.use(express.static('dist'))
+
+app.get('/', function(req, res){
+  res.sendfile(__dirname + '/index.html');
+});
+
+app.listen(8080);
