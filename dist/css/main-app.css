@@ -1,0 +1,75 @@
+.inline-input {
+            float: left;
+        }
+        .input-textbox {
+            width: 100px;
+        }
+        .main-container {
+            width: 100%;
+            height: 100%;
+        }
+        .main-header-container {
+            width: 100%;
+            height: 60px;
+            border-bottom: 1px solid rgba(107, 180, 214, 0.32);
+        }
+        .main-content-container {
+            width: 100%;
+            height: 260px;
+            position: relative;
+        }
+        .main-header-logo-container {
+            width: 140px;
+            height: 60px;
+            font-size: 40px;
+            color: rgb(0, 121, 232);
+            line-height: 60px;
+            text-align: center;
+        }
+        .starting-container,
+        .destination-container,
+		.onward-journey-date-container,
+		.return-journey-date-container,
+		.searching-trains-container		{
+            width: 600px;
+            margin: auto;
+            height: 90px;
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            margin: auto;
+            display: none;
+        }
+        .from-text {
+            font-size: 25px;
+            line-height: 30px;
+            padding: 0 0 10px 0;
+            text-align: center;
+        }
+        .typeahead {
+            width: 100%;
+        }
+		.txtOnwardCalendar {
+			text-align: center;
+		}
+		.skip-button {
+			float: right;
+			margin-top: 25px;
+		}
+		.select-train-container {
+			
+		}
+		.details-button-container {
+			float: left;
+		}
+		.available-message-container {
+			float: left;
+			color: #43af11;
+			margin: 30px;
+			font-size: 20px;
+		}
+		.book-button-container {
+			float: left;
+		}

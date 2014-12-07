@@ -6,66 +6,7 @@
     <link href="css/master.min.css?v813_94" rel="stylesheet" />
     <link href="css/bootstrap-datetimepicker.min.css" rel="stylesheet" />
     <link href="css/datepicker.css" rel="stylesheet" />
-
-    <style>
-        .inline-input {
-            float: left;
-        }
-        .input-textbox {
-            width: 100px;
-        }
-        .main-container {
-            width: 100%;
-            height: 100%;
-            border: 1px solid red;
-        }
-        .main-header-container {
-            width: 100%;
-            height: 60px;
-            border-bottom: 1px solid rgba(107, 180, 214, 0.32);
-        }
-        .main-content-container {
-            width: 100%;
-            height: 260px;
-            border: 1px solid black;
-            position: relative;
-        }
-        .main-header-logo-container {
-            width: 140px;
-            height: 60px;
-            font-size: 40px;
-            color: rgb(0, 121, 232);
-            line-height: 60px;
-            text-align: center;
-        }
-        .starting-container,
-        .destination-container,
-		.onward-journey-date-container,
-		.return-journey-date-container		{
-            width: 600px;
-            margin: auto;
-            height: 90px;
-            position: absolute;
-            top: 0;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            margin: auto;
-            display: none;
-        }
-        .from-text {
-            font-size: 25px;
-            line-height: 30px;
-            padding: 0 0 10px 0;
-            text-align: center;
-        }
-        .typeahead {
-            width: 100%;
-        }
-		.txtOnwardCalendar {
-			text-align: center;
-		}
-    </style>
+    <link href="css/main-app.css" rel="stylesheet" />
 
 </head>
 
@@ -84,25 +25,6 @@
                 <div class="errorMessageFixed"> </div>
             </div>
         </div>
-
-    </div>
-    
-    <div class="searchRow clearfix">
-        <div class="LB">
-            <label class="inputLabel">Date of Journey</label>
-            <span class="blackTextSmall"></span>
-            <input id="txtOnwardCalendar" class="XXinput calendar" placeholder="dd-mmm-yyyy" type="text" title="Date in the format dd-mmm-yyyy" tabindex="3" readonly="readonly" />
-        </div>
-        <div class="searchRight retJouney">
-            <label class="inputLabel">Date of Return<span class="opt">&nbsp;(Optional)</span>
-            </label>
-            <input id="txtReturnCalendar" class="XXinput calendar" placeholder="dd-mmm-yyyy" type="text" title="Date in the format dd-mmm-yyyy" tabindex="4" readonly="readonly" />
-        </div>
-    </div>
-
-    <div class="dateError">Onward date should be before return date</div>
-    <div class="buttonContainer">
-        <button class="RB Xbutton" id="searchBtn" tabindex="6">Search Buses</button>
     </div>
     <script src='js/jquery-2.1.1.min.js'></script>
     <script src="js/bootstrap.min.js"></script>
@@ -136,13 +58,89 @@
             <div class="inputLabel from-text onwardJourneyDate">When are you planning to return from </div>
 			<div id='to-from-text' class='inputLabel from-text onwardJourneyDate'>toPlace to fromPlace</div>
            <div class='txtOnwardCalendar'><input id="txtReturnCalendar" class="XXinput calendar" placeholder="dd-mmm-yyyy" type="text" title="Date in the format dd-mmm-yyyy" tabindex="4" readonly="readonly" /></div>
-            <div class="errorMessageFixed"> </div>
+            <button type="button" class="btn btn-default skip-button" id='skipButton'>Skip this step</button>
+        </div>
+    </script>
+	<script id='searchingTrains' type='text/template'>
+        <div class="searching-trains-container" id='searching-trains-container'>
+            <div class="inputLabel from-text onwardJourneyDate">Searching for trains...</div>
+			<!--div class="progress progress-striped">
+				<div class="bar" style="width: 60%;"></div>
+			</div-->
+        </div>
+    </script>
+	<script id='trainsFound' type='text/template'>
+        <div class="select-train-container" id='trains-found-container'>
+            <div class="inputLabel from-text onwardJourneyDate">Select a train</div>
+			<div class="train-shell-container" id='train-shell-container'>
+            <div class="train-shell">
+				<div class="list-group">
+				<a href="#" class="list-group-item">
+				<h4 class="list-group-item-heading">Shatabdi Express</h4>
+				<p class="list-group-item-text">Seats available starting at 706</p>
+  </a>
+  <div id='details-container'>
+  <div class='details-button-container'>
+  <div class="btn-group" data-toggle="buttons">
+  <label class="btn btn-primary active">
+    <input type="radio" name="options" id="option1" autocomplete="off" checked> FIRST AC
+  </label>
+  <label class="btn btn-primary">
+    <input type="radio" name="options" id="option2" autocomplete="off"> SECOND AC
+  </label>
+  <label class="btn btn-primary">
+    <input type="radio" name="options" id="option3" autocomplete="off"> THIRD AC
+  </label>
+  <label class="btn btn-primary">
+    <input type="radio" name="options" id="option4" autocomplete="off"> 3 AC ECONOMY
+  </label>
+  <label class="btn btn-primary">
+    <input type="radio" name="options" id="option5" autocomplete="off"> AC CHAIR CAR
+  </label>
+  <label class="btn btn-primary">
+    <input type="radio" name="options" id="option6" autocomplete="off"> FIRST CLASS
+  </label>
+  <label class="btn btn-primary">
+    <input type="radio" name="options" id="option7" autocomplete="off"> SLEEPER CLASS
+  </label>
+  <label class="btn btn-primary">
+    <input type="radio" name="options" id="option8" autocomplete="off"> SECOND SEATING
+  </label>
+</div>
+
+<br>
+<div class="btn-group" data-toggle="buttons">
+  <label class="btn btn-primary active">
+    <input type="radio" name="options" id="option1" autocomplete="off" checked> REGULAR TICKET
+  </label>
+  <label class="btn btn-primary">
+    <input type="radio" name="options" id="option2" autocomplete="off"> TATKAL BOOKING
+  </label>
+</div>
+</div>
+<div class='available-message-container'>
+Available
+</div>
+<div class='book-button-container'>
+<button type="button" class="btn btn-default skip-button" id='skipButton'>Book Tickets</button>
+</div>
+  </div>
+</div>	
+			</div>
+        </div>
+        </div>
+    </script>
+	<script id='trainTemplate' type='text/template'>
+        <div class="train-shell-container" id='train-shell-container'>
+            <div class="train-shell">
+				<div class="train-name">Shatabdi Express</div>
+				<div class="train-name">Seats available</div>
+				<div class="train-name">Starts from 706</div>
+			</div>
         </div>
     </script>
 
     <script>
-        
-        $('#txtReturnCalendar').datepicker();
         var listOfCities = ["Achalpur", "Achhnera", "Adalaj", "Adilabad", "Adityapur", "Adoni", "Adoor", "Adyar", "Adra", "Afzalpur", "Agartala", "Agra", "Ahmedabad", "Ahmednagar", "Aizawl", "Ajmer", "Akola", "Akot", "Alappuzha", "Aligarh", "Alipurduar", "Allahabad", "Alwar", "Amalapuram", "Amalner", "Ambejogai", "Ambikapur", "Amravati", "Amreli", "Amritsar", "Amroha", "Anakapalle", "Anand", "Anantapur", "Anantnag", "Anjar", "Anjangaon", "Ankleshwar", "Arakkonam", "Araria", "Arambagh", "Arsikere", "Arrah", "Aruppukkottai", "Arvi", "Arwal", "Asansol", "Asarganj", "AshokNagar", "Athni", "Aurangabad", "Aurangabad", "Azamgarh", "Bikaner", "Bhiwandi", "Bagaha", "Bageshwar", "Bahadurgarh", "Baharampur", "Bahraich", "Balaghat", "Balangir", "BaleshwarTown", "Bengaluru", "Bankura", "Bapatla", "Baramula", "Barbil", "Bargarh", "Barh", "BaripadaTown", "Barnala", "Barpeta", "Batala", "Bathinda", "Begusarai", "Belagavi", "Bellampalle", "Ballari", "Belonia", "Bettiah", "Bhabua", "Bhadrachalam", "Bhadrak", "Bhagalpur", "Bhainsa", "Bharuch", "Bhatapara", "Bhavnagar", "Bhawanipatna", "Bheemunipatnam", "BhilaiNagar", "Bhilwara", "Bhimavaram", "Bhiwani", "Bhongir", "Bhopal", "Bhubaneswar", "Bhuj", "Bilaspur", "Bobbili", "Bodhan", "BokaroSteelCity", "BongaigaonCity", "Brahmapur", "Buxar", "Byasanagar", "Chandausi", "Chaibasa", "Chandigarh", "CharkhiDadri", "Chatra", "Chalakudy", "Changanassery", "Chennai", "Cherthala", "Chikkamagaluru", "Chhapra", "Chilakaluripet", "Chirala", "Chirkunda", "Chirmiri", "Chittur-Thathamangalam", "Chittoor", "Coimbatore", "Cuttack", "Dalli-Rajhara", "Medininagar(Daltonganj)", "Darbhanga", "Darjiling", "Davanagere", "Deesa", "Dehradun", "Dehri-on-Sone", "Delhi", "Deoghar", "Dhamtari", "Dhanbad", "Dharmanagar", "Dharmavaram", "Dhenkanal", "Dhoraji", "Dhubri", "Dhule", "Dhuri", "Dibrugarh", "Dimapur", "Diphu", "Kalyan-Dombivali", "Dumka", "Dumraon", "Durg", "Eluru", "Erode", "EnglishBazar", "Etawah", "Faridabad", "Faridkot", "Firozabad", "Farooqnagar", "Fatehabad", "Fazilka", "Forbesganj", "Firozpur", "FirozpurCantt.", "FatehpurSikri", "Gadwal", "Ganjbasoda", "Gaya", "Giridih", "Goalpara", "Gobichettipalayam", "Gobindgarh", "Godhra", "Gohana", "Gokak", "Gooty", "Gopalganj", "Gudivada", "Gudur", "Kalaburagi", "Gumia", "Guntakal", "Guntur", "Gurdaspur", "Gurgaon", "Guruvayoor", "Guwahati", "Gwalior", "Habra", "Hajipur", "Haldwani-cum-Kathgodam", "Hansi", "Hapur", "Hardwar", "Hazaribag", "Hindupur", "Hisar", "Hoshiarpur", "Hubli-Dharwad", "Hugli-Chinsurah", "Hyderabad", "Ichalkaranji", "Imphal", "Indore", "Itarsi", "Jabalpur", "Jagdalpur", "Jaggaiahpet", "Jagraon", "Jagtial", "Jaipur", "JalandharCantt.", "Jalandhar", "Jalpaiguri", "Jamalpur", "Jammalamadugu", "Jammu", "Jamnagar", "Jamshedpur", "Jamui", "Jangaon", "Jatani", "Jehanabad", "Jhansi", "Jhargram", "Jharsuguda", "JhumriTilaiya", "Jind", "Jorhat", "Jodhpur", "Kadapa", "Kadi", "Kadiri", "Kagaznagar", "Kailasahar", "Kaithal", "Kakinada", "Kalpi", "Kalyan-Dombivali", "Kamareddy", "Kancheepuram", "Kandukur", "Kanhangad", "Kannur", "Kanpur", "Kapadvanj", "Kapurthala", "Karaikal", "Karimganj", "Karimnagar", "Karjat", "Karnal", "Karur", "Karwar", "Kasaragod", "Kashipur", "Kathua", "Katihar", "Kavali", "Kayamkulam", "Kendrapara", "Kendujhar", "Keshod", "Khagaria", "Khambhat", "Khammam", "Khanna", "Kharagpur", "Kharar", "Khowai", "Kishanganj", "Kochi", "Kodungallur", "Kohima", "Kolar", "Kolkata", "Kollam", "Korba", "Koratla", "KotKapura", "Kothagudem", "Kottayam", "Kovvur", "Kozhikode", "Kunnamkulam", "Kurnool", "Kyathampalle", "Lachhmangarh", "Ladnu", "Ladwa", "Lahar", "Laharpur", "Lakheri", "Lakhimpur", "Lakhisarai", "Lakshmeshwar", "LalGopalganjNindaura", "Lalganj", "Lalgudi", "Lalitpur", "Lalganj", "Lalsot", "Lanka", "Lar", "Lathi", "Latur", "Lilong", "Limbdi", "Lingsugur", "Loha", "Lohardaga", "Lonar", "Lonavla", "Longowal", "Loni", "Losal", "Lucknow", "Ludhiana", "Lumding", "Lunawada", "Lunglei", "Macherla", "Machilipatnam", "Madanapalle", "Maddur", "Madhepura", "Madhubani", "Madhugiri", "Madhupur", "Madikeri", "Madurai", "Magadi", "Mahad", "Mahbubnagar", "Mahalingapura", "Maharajganj", "Maharajpur", "Mahasamund", "Mahe", "Manendragarh", "Mahendragarh", "Mahesana", "Mahidpur", "MahnarBazar", "Mahuva", "Maihar", "Mainaguri", "Makhdumpur", "Makrana", "Malda", "MalajKhand", "Malappuram", "Malavalli", "Malegaon", "Malerkotla", "Malkangiri", "Malkapur", "Malout", "Malpura", "Malur", "Manasa", "Manavadar", "Manawar", "Mancherial", "Mandalgarh", "Mandamarri", "Mandapeta", "Mandawa", "Mandi", "MandiDabwali", "Mandideep", "Mandla", "Mandsaur", "Mandvi", "Mandya", "Maner", "Mangaldoi", "Mangaluru", "Mangalvedhe", "Manglaur", "Mangrol", "Mangrol", "Mangrulpir", "Manihari", "Manjlegaon", "Mankachar", "Manmad", "Mansa", "Mansa", "Manuguru", "Manvi", "Manwath", "Mapusa", "Margao", "Margherita", "Marhaura", "Mariani", "Marigaon", "Markapur", "Marmagao", "Masaurhi", "Mathabhanga", "Mattannur", "Mauganj", "Mavelikkara", "Mavoor", "MayangImphal", "Medak", "Medinipur", "Meerut", "Mehkar", "Mahemdabad", "Memari", "MertaCity", "Mhaswad", "MhowCantonment", "Mhowgaon", "Mihijam", "Mira-Bhayandar", "Mirganj", "Miryalaguda", "Modasa", "Modinagar", "Moga", "Mohali", "Mokameh", "Mokokchung", "Monoharpur", "Moradabad", "Morena", "Morinda", "Morshi", "Morvi", "Motihari", "Motipur", "MountAbu", "Mudalagi", "Mudabidri", "Muddebihal", "Mudhol", "Mukerian", "Mukhed", "Muktsar", "Mul", "Mulbagal", "Multai", "GreaterMumbai", "Mundi", "Mundargi", "Mungeli", "Munger", "Murliganj", "Murshidabad", "Murtijapur", "Murwara(Katni)", "Musabani", "Mussoorie", "Muvattupuzha", "Muzaffarpur", "Nabadwip", "Nabarangapur", "Nabha", "Nadbai", "Nadiad", "Nagaon", "Nagapattinam", "Nagar", "Nagari", "Nagarkurnool", "Nagaur", "Nagda", "Nagercoil", "Nagina", "Nagla", "Nagpur", "Nahan", "Naharlagun", "Naihati", "NailaJanjgir", "Nainital", "Nainpur", "Najibabad", "Nakodar", "Nakur", "Nalbari", "Namagiripettai", "Namakkal", "Nanded-Waghala", "Nandgaon", "Nandivaram-Guduvancheri", "Nandura", "Nandurbar", "Nandyal", "Nangal", "Nanjangud", "Nanjikottai", "Nanpara", "Narasapuram", "Narasaraopet", "Naraura", "Narayanpet", "Nargund", "Narkatiaganj", "Narkhed", "Narnaul", "Narsinghgarh", "Narsinghgarh", "Narsipatnam", "Narwana", "Nashik", "Nasirabad", "Natham", "Nathdwara", "Naugachhia", "NaugawanSadat", "Nautanwa", "Navalgund", "NaviMumbai", "Navsari", "Nawabganj", "Nawada", "Nawanshahr", "Nawapur", "Nedumangad", "Neem-Ka-Thana", "Neemuch", "Nehtaur", "Nelamangala", "Nellikuppam", "Nellore", "Nepanagar", "NewDelhi", "Neyveli(TS)", "Neyyattinkara", "Nidadavole", "Nilanga", "Nilambur", "Nimbahera", "Nirmal", "Niwari", "Niwai", "Nizamabad", "Nohar", "Noida", "Nokha", "Nokha", "Nongstoin", "Noorpur", "NorthLakhimpur", "Nowgong", "Nowrozabad(Khodargama)", "Nuzvid", "O'Valley", "Oddanchatram", "Obra", "Ongole", "Orai", "Osmanabad", "Ottappalam", "Ozar", "P.N.Patti", "Pachora", "Pachore", "Pacode", "Padmanabhapuram", "Padra", "Padrauna", "Paithan", "Pakaur", "Palacole", "Palai", "Palakkad", "Palani", "Palanpur", "PalasaKasibugga", "Palghar", "Pali", "Pali", "PaliaKalan", "Palitana", "Palladam", "Pallapatti", "Pallikonda", "Palwal", "Palwancha", "Panagar", "Panagudi", "Panaji", "Panamattom", "Panchkula", "Panchla", "Pandharkaoda", "Pandharpur", "Pandhurna", "Pandua", "Panipat", "Panna", "Panniyannur", "Panruti", "Panvel", "Pappinisseri", "Paradip", "Paramakudi", "Parangipettai", "Parasi", "Paravoor", "Parbhani", "Pardi", "Parlakhemundi", "Parli", "Parola", "Partur", "Parvathipuram", "Pasan", "PaschimPunropara", "Pasighat", "Patan", "Pathanamthitta", "Pathankot", "Pathardi", "Pathri", "Patiala", "Patna", "Pattran", "Patratu", "Pattamundai", "Patti", "Pattukkottai", "Patur", "Pauni", "Pauri", "Pavagada", "Pedana", "Peddapuram", "Pehowa", "Pen", "Perambalur", "Peravurani", "Peringathur", "Perinthalmanna", "Periyakulam", "Periyasemur", "Pernampattu", "Perumbavoor", "Petlad", "Phagwara", "Phalodi", "Phaltan", "Phillaur", "Phulabani", "Phulera", "Phulpur", "Phusro", "Pihani", "Pilani", "Pilibanga", "Pilibhit", "Pilkhuwa", "Pindwara", "Pinjore", "PiparCity", "Pipariya", "Piro", "Piriyapatna", "Pithampur", "Pithapuram", "Pithoragarh", "Pollachi", "Polur", "Pondicherry", "Ponnani", "Ponneri", "Ponnur", "Porbandar", "Porsa", "PortBlair", "Powayan", "Prantij", "Pratapgarh", "Pratapgarh", "Prithvipur", "Proddatur", "Pudukkottai", "Pudupattinam", "Pukhrayan", "Pulgaon", "Puliyankudi", "Punalur", "Punch", "Pune", "Punjaipugalur", "Punganur", "Puranpur", "Purna", "Puri", "Purnia", "Purquazi", "Purulia", "Purwa", "Pusad", "Puttur", "Puthuppally", "Puttur", "Qadian", "Koyilandy", "RabkaviBanhatti", "Radhanpur", "RaeBareli", "Rafiganj", "Raghogarh-Vijaypur", "Raghunathpur", "Raghunathganj", "Rahatgarh", "Rahuri", "Raayachuru", "Raiganj", "Raigarh", "Ranebennuru", "Ranipet", "Raikot", "Raipur", "Rairangpur", "Raisen", "Raisinghnagar", "Rajagangapur", "Rajahmundry", "Rajakhera", "Rajaldesar", "Rajam", "Rajampet", "Rajapalayam", "Rajauri", "Rajgarh(Alwar)", "Rajgarh(Churu)", "Rajgarh", "Rajgir", "Rajkot", "Rajnandgaon", "Rajpipla", "Rajpura", "Rajsamand", "Rajula", "Rajura", "Ramachandrapuram", "Ramagundam", "Ramanagaram", "Ramanathapuram", "Ramdurg", "Rameshwaram", "RamganjMandi", "Ramgarh", "Ramngarh", "Ramnagar", "Ramnagar", "Rampur", "RampurManiharan", "RampurManiharan", "RampuraPhul", "Rampurhat", "Ramtek", "Ranaghat", "Ranavav", "Ranchi", "Rangia", "Rania", "Ranibennur", "Rapar", "Rasipuram", "Rasra", "Ratangarh", "Rath", "Ratia", "Ratlam", "Ratnagiri", "Rau", "Raurkela", "Raver", "Rawatbhata", "Rawatsar", "RaxaulBazar", "Rayachoti", "Rayadurg", "Rayagada", "Reengus", "Rehli", "Renigunta", "Renukoot", "Reoti", "Repalle", "Revelganj", "Rewa", "Rewari", "Rishikesh", "Risod", "Robertsganj", "RobertsonPet", "Rohtak", "Ron", "Roorkee", "Rosera", "Rudauli", "Rudrapur", "Rudrapur", "Rupnagar", "Sabalgarh", "Sadabad", "Sadalagi", "Sadasivpet", "Sadri", "Sadulshahar", "Sadulpur", "Safidon", "Safipur", "Sagar", "Sagara", "Sagwara", "Saharanpur", "Saharsa", "Sahaspur", "Sahaswan", "Sahawar", "Sahibganj", "Sahjanwa", "Saidpur", "Saiha", "Sailu", "Sainthia", "Sakaleshapura", "Sakti", "Salaya", "Salem", "Salur", "Samalkha", "Samalkot", "Samana", "Samastipur", "SambalpurTown", "Sambhal", "Sambhar", "Samdhan", "Samthar", "Sanand", "Sanawad", "Sanchore", "Sarsod", "Sindagi", "Sandi", "Sandila", "Sanduru", "Sangamner", "Sangareddy", "Sangaria", "Sangli", "Sangole", "Sangrur", "Sankarankoil", "Sankari", "Sankeshwara", "Santipur", "Sarangpur", "Sardarshahar", "Sardhana", "Sarni", "Sasaram", "Sasvad", "Satana", "Satara", "Satna", "Sathyamangalam", "Sattenapalle", "Sattur", "Saunda", "Saundatti-Yellamma", "Sausar", "Savarkundla", "Savanur", "Savner", "SawaiMadhopur", "Sawantwadi", "Sedam", "Sehore", "Sendhwa", "Seohara", "Seoni", "Seoni-Malwa", "Shahabad", "Shahabad Hardoi", "Shahabad Rampur", "Shahade", "Shahbad", "Shahdol", "Shahganj", "Shahjahanpur", "Shahpur", "Shahpura", "Shahpura", "Shajapur", "Shamgarh", "Shamli", "Shamsabad Agra", "Shamsabad", "Farrukhabad", "Shegaon", "Sheikhpura", "Shendurjana", "Shenkottai", "Sheoganj", "Sheohar", "Sheopur", "Sherghati", "Sherkot", "Shiggaon", "Shikaripur", "Shikarpur", "Bulandshahr", "Shikohabad", "Shillong", "Shimla", "Shivamogga", "Shirdi", "Shirpur-Warwade", "Shirur", "Shishgarh", "Shivpuri", "Sholavandan", "Sholingur", "Shoranur", "Surapura", "Shrigonda", "Shrirampur", "Shrirangapattana", "Shujalpur", "Siana", "Sibsagar", "Siddipet", "Sidhi", "Sidhpur", "Sidlaghatta", "Sihor", "Sihora", "Sikanderpur", "SikandraRao", "Sikandrabad", "Sikar", "Silao", "Silapathar", "Silchar", "Siliguri", "Sillod", "Silvassa", "Simdega", "Sindhagi", "Sindhnur", "Singrauli", "Sinnar", "Sira", "Sircilla", "SirhindFatehgarhSahib", "Sirkali", "Sirohi", "Sironj", "Sirsa", "Sirsaganj", "Sirsi", "Sirsi", "Siruguppa", "Sitamarhi", "Sitapur", "Sitarganj", "Sivaganga", "Sivagiri", "Sivakasi", "Siwan", "Sohagpur", "Sohna", "Sojat", "Solan", "Solapur", "Sonamukhi", "Sonepur", "Songadh", "Sonipat", "Sopore", "Soro", "Soron", "Soyagaon", "SriMadhopur", "Srikakulam", "Srikalahasti", "Srinagar", "Srinagar", "Srinivaspur", "SrisailamProject(RightFlankColony)Township", "Srirampore", "Srivilliputhur", "Suar", "Sugauli", "Sujangarh", "Sujanpur", "Sultanganj", "Sullurpeta", "Sultanpur", "Sumerpur", "Sumerpur", "Sunabeda", "Sunam", "Sundargarh", "Sundarnagar", "Supaul", "Surandai", "Surat", "Suratgarh", "Suri", "Suriyampalayam", "Suryapet", "Tadepalligudem", "Tadpatri", "Taki", "Talaja", "Talcher", "TalegaonDabhade", "Talikota", "Taliparamba", "Talode", "Talwara", "Tamluk", "Tanda", "Tandur", "Tanuku", "Tarakeswar", "Tarana", "Taranagar", "Taraori", "Tarbha", "Tarikere", "TarnTaran", "Tasgaon", "Tehri", "Tekkalakote", "Tenali", "Tenkasi", "Tenudam-cum-Kathhara", "Terdal", "Tezpur", "Thakurdwara", "Thammampatti", "ThanaBhawan", "Thane", "Thanesar", "Thangadh", "Thanjavur", "Tharad", "Tharamangalam", "Tharangambadi", "TheniAllinagaram", "Thirumangalam", "Thirupuvanam", "Thiruthuraipoondi", "Thiruvalla", "Thiruvallur", "Thiruvananthapuram", "Thiruvarur", "Thodupuzha", "Thoubal", "Thrissur", "Thuraiyur", "Tikamgarh", "TildaNewra", "Tilhar", "Talikota", "Tindivanam", "Tinsukia", "Tiptur", "Tirora", "Tiruchendur", "Tiruchengode", "Tiruchirappalli", "Tirukalukundram", "Tirukkoyilur", "Tirunelveli", "Tirupathur", "Tirupathur", "Tirupati", "Tiruppur", "Tirur", "Tiruttani", "Tiruvannamalai", "Tiruvethipuram", "Tiruvuru", "Tirwaganj", "Titlagarh", "Tittakudi", "Todabhim", "Todaraisingh", "Tohana", "Tonk", "Tuensang", "Tuljapur", "Tulsipur", "Tumkur", "Tumsar", "Tundla", "Tuni", "Tura", "Uchgaon", "Udaipur", "Udaipur", "Udaipurwati", "Udgir", "Udhagamandalam", "Udhampur", "Udumalaipettai", "Udupi", "Ujhani", "Ujjain", "Umarga", "Umaria", "Umarkhed", "Umbergaon", "Umred", "Umreth", "Una", "Unjha", "Unnamalaikadai", "Unnao", "Upleta", "Uran", "UranIslampur", "Uravakonda", "UrmarTanda", "Usilampatti", "Uthamapalayam", "Uthiramerur", "Utraula", "Vadakkuvalliyur", "Vadalur", "VadgaonKasba", "Vadipatti", "Vadnagar", "Vadodara", "Vaijapur", "Vaikom", "Valparai", "Valsad", "Vandavasi", "Vaniyambadi", "Vapi", "Vapi", "Varanasi", "Varkala", "Vasai-Virar", "Vatakara", "Vedaranyam", "Vellakoil", "Vellore", "Venkatagiri", "Veraval", "Vidisha", "Vijainagar Ajmer", "Vijapur", "Vijaypur", "Vijayapura", "Vijayawada", "Vikarabad", "Vikramasingapuram", "Viluppuram", "Vinukonda", "Viramgam", "Virudhachalam", "Virudhunagar", "Visakhapatnam", "Visnagar", "Viswanatham", "Vita", "Vizianagaram", "Vrindavan", "Vyara", "WadgaonRoad", "Wadhwan", "Wadi", "Wai", "Wanaparthy", "Wani", "Wankaner", "WaraSeoni", "Warangal", "Wardha", "Warhapur", "Warisaliganj", "Warora", "Warud", "Washim", "Wokha", "Yadgir", "Yamunanagar", "Yanam", "Yavatmal", "Yawal", "Yellandu", "Yemmiganur", "Yerraguntla", "Yevla", "Zaidpur", "Zamania", "Zira", "Zirakpur", "Zunheboto"];
 
         function loadTemplate(templateElem) {
@@ -185,14 +183,33 @@
 							loadTemplate($('#onwardJourneyDate'));
 							$('#from-to-text').text($('#from-to-text').text().replace('fromPlace', window.fromPlace).replace('toPlace', window.toPlace));
 							$('#onward-journey-date-container').fadeIn('slow');
-							$('#txtOnwardCalendar').datepicker().on('changeDate', function(e){
+							$('#txtOnwardCalendar').datepicker();
+							$('#txtOnwardCalendar').datepicker('show').on('changeDate', function(e){
 								$(this).datepicker('hide');
 								loadTemplate($('#returnJourneyDate'));
 								$('#to-from-text').text($('#to-from-text').text().replace('fromPlace', window.fromPlace).replace('toPlace', window.toPlace));
 								$('#return-journey-date-container').fadeIn('slow');
-								$('#txtReturnCalendar').datepicker().on('changeDate', function(e){
+								$('#txtReturnCalendar').datepicker()
+								$('#txtReturnCalendar').datepicker('show').on('changeDate', function(e){
 									$(this).datepicker('hide');
-							});
+									loadTemplate($('#searchingTrains'));
+									$('#searching-trains-container').fadeIn('slow');
+									setTimeout(function(){
+										loadTemplate($('#trainsFound'));
+										$('#trains-found-container').fadeIn('slow');
+									}, 3000)
+								});
+								$('#skipButton').click(function(){
+									loadTemplate($('#searchingTrains'));
+									$('#searching-trains-container').fadeIn('slow');
+									setTimeout(function(){
+										loadTemplate($('#trainsFound'));
+										$('#trains-found-container').fadeIn('slow');
+										
+										//$('#details-container').slideToggle('slow');
+										
+									}, 3000)
+								});
 							});
                             return item;
                         }
